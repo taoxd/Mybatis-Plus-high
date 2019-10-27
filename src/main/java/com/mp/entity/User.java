@@ -1,6 +1,7 @@
 package com.mp.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
@@ -33,6 +34,7 @@ public class User {
     private Integer version;
     //逻辑删除标识(0未删除1已删除)
     @TableLogic
+    @TableField(select = false)
     private Integer deleted;
 }
 
