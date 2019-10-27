@@ -1,6 +1,7 @@
 package com.mp.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class User {
     //版本
     private Integer version;
     //逻辑删除标识(0未删除1已删除)
+    @TableLogic
     private Integer deleted;
 }
 

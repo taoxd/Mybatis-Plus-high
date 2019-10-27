@@ -5,11 +5,17 @@ spring:
     username: root
     password: root
 
-#ÈÕÖ¾ÅäÖÃ
-#traceÊÇÈÕÖ¾×îµÍ¼¶±ğ£¬¿ÉÒÔÊä³ö¸ü¶àµÄÏ¸½Ú
+#æ—¥å¿—é…ç½®
+#traceæ˜¯æ—¥å¿—æœ€ä½çº§åˆ«ï¼Œå¯ä»¥è¾“å‡ºæ›´å¤šçš„ç»†èŠ‚
 logging:
   level:
     root: warn
     com.mp.dao: trace
   pattern:
     console: '%p%m%n'
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+      logic-delete-value: 1
