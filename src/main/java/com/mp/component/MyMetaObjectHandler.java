@@ -16,15 +16,23 @@ import java.time.LocalDateTime;
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        System.out.println("insertFill...");
-        setInsertFieldValByName("createTime", LocalDateTime.now(), metaObject);
-        //setFieldValByName("createTime", LocalDateTime.now(), metaObject);
+        //有属性的时候才执行
+        boolean hasSetter = metaObject.hasSetter("createTime");
+        if (hasSetter) {
+            System.out.println("insertFill...");
+            setInsertFieldValByName("createTime", LocalDateTime.now(), metaObject);
+            //setFieldValByName("createTime", LocalDateTime.now(), metaObject);
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        System.out.println("updateFill...");
-        setUpdateFieldValByName("updateTime", LocalDateTime.now(), metaObject);
-        //setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+        //如果updateTime为空，就设值，否则不设值
+        Object val = getFieldValByName("updateTime", metaObject);
+        if (val == null) {
+            System.out.println("updateFill...");
+            setUpdateFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+            //setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+        }
     }
 }

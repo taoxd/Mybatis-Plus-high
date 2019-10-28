@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class FillTest {
@@ -40,8 +42,10 @@ public class FillTest {
          WHERE id=1088248166370832385 AND deleted=0;
          */
         User user = new User();
-        user.setAge(27);
+        user.setAge(29);
         user.setId(1088248166370832385L);
+        //设值了更新时间，就不会走自动填充处理器
+        user.setUpdateTime(LocalDateTime.now());
         int rows = userMapper.updateById(user);
         System.out.println("影响行数: " + rows);
     }
