@@ -1,6 +1,8 @@
 package com.mp.config;
 
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
+import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
@@ -8,6 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -45,12 +49,12 @@ public class MybatisPlusConfiguration {
         return performanceInterceptor;
     }
 
-    @Bean
+/*    @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        /*
+        *//*
          * 【测试多租户】 SQL 解析处理拦截器<br>
-         */
+         *//*
         List<ISqlParser> sqlParserList = new ArrayList<>();
         TenantSqlParser tenantSqlParser = new TenantSqlParser();
         tenantSqlParser.setTenantHandler(new TenantHandler() {
@@ -59,10 +63,10 @@ public class MybatisPlusConfiguration {
                 return new LongValue(1088248166370832385L);
             }
 
-            /**
+            *//**
              * 数据表中多租户id
              * @return
-             */
+             *//*
             @Override
             public String getTenantIdColumn() {
                 return "manager_id";
@@ -71,19 +75,30 @@ public class MybatisPlusConfiguration {
             @Override
             public boolean doTableFilter(String tableName) {
                 // 过滤user表,不加租户
-                /*
+                *//*
                 if ("user".equals(tableName)) {
                     return true;
                 }
-                */
+                *//*
                 return false;
             }
         });
         sqlParserList.add(tenantSqlParser);
         paginationInterceptor.setSqlParserList(sqlParserList);
-
+        //匿名内部类，new接口，相当于创建匿名实现类
+        paginationInterceptor.setSqlParserFilter(new ISqlParserFilter() {
+            @Override
+            public boolean doFilter(MetaObject metaObject) {
+                MappedStatement ms = SqlParserHelper.getMappedStatement(metaObject);
+                // 过滤自定义查询此时无租户信息约束
+                if ("com.mp.dao.UserMapper.selectById".equals(ms.getId())) {
+                    return true;
+                }
+                return false;
+            }
+        });
         return paginationInterceptor;
-    }
+    }*/
 }
 
 
