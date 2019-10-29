@@ -28,7 +28,7 @@ public class OptTest {
         int version = 1;
 
         User user = new User();
-        user.setAge(35);
+        user.setAge(39);
         user.setId(1088248166370832385L);
         user.setVersion(version);
         int rows = userMapper.updateById(user);
