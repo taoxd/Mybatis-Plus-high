@@ -1,6 +1,8 @@
 package com.mp;
 
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.mp.config.MybatisPlusConfiguration;
 import com.mp.dao.UserMapper;
 import com.mp.entity.User;
 import org.junit.Test;
@@ -27,6 +29,11 @@ public class MyTest {
 
     @Test
     public void select() {
+        /*
+        SELECT id,name,age,email,manager_id,create_time,update_time,version FROM user_2019 WHERE deleted=0
+         */
+        MybatisPlusConfiguration.myTableName.set("user_2019");
+
         //没加注解@TableField(select = false)，只查询未删除的
         //SELECT id,name,age,email,manager_id,create_time,update_time,version,deleted FROM user WHERE deleted=0
 
