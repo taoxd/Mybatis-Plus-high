@@ -117,6 +117,7 @@ public class MybatisPlusConfiguration {
         tableNameHandlerMap.put("user", new ITableNameHandler() {
             @Override
             public String dynamicTableName(MetaObject metaObject, String sql, String tableName) {
+                //如果返回值为空，则不进行替换，还是user表
                 return myTableName.get();
             }
         });
@@ -128,7 +129,7 @@ public class MybatisPlusConfiguration {
             @Override
             public boolean doFilter(MetaObject metaObject) {
                 MappedStatement ms = SqlParserHelper.getMappedStatement(metaObject);
-                // 过滤自定义查询此时无租户信息约束
+                // 特定sql过滤也不会替换动态表名
                 if ("com.mp.dao.UserMapper.selectById".equals(ms.getId())) {
                     return true;
                 }
