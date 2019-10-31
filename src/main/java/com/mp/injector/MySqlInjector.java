@@ -2,6 +2,7 @@ package com.mp.injector;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
+import com.baomidou.mybatisplus.extension.injector.methods.additional.AlwaysUpdateSomeColumnById;
 import com.baomidou.mybatisplus.extension.injector.methods.additional.InsertBatchSomeColumn;
 import com.baomidou.mybatisplus.extension.injector.methods.additional.LogicDeleteByIdWithFill;
 import com.mp.method.DeleteAllMethod;
@@ -27,6 +28,8 @@ public class MySqlInjector extends DefaultSqlInjector {
         methodList.add(new InsertBatchSomeColumn(t -> !t.isLogicDelete() && !t.getColumn().equals("age")));
         //逻辑删除并填充
         methodList.add(new LogicDeleteByIdWithFill());
+        //排除name字段
+        methodList.add(new AlwaysUpdateSomeColumnById(t -> !t.getColumn().equals("name")));
         return methodList;
     }
 }

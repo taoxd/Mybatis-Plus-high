@@ -67,4 +67,26 @@ public class InjectorTest {
         System.out.println("影响行数: " + rows);
     }
 
+    @Test
+    public void alwaysUpdateSomeColumnById() {
+        /*
+        UPDATE USER
+            SET age = 50,
+            email = NULL,
+            manager_id = NULL,
+            create_time = NULL,
+            update_time = '2019-10-31T21:23:03.948',
+            version = NULL
+        WHERE
+            id = 1094592041087729666
+            AND deleted = 0
+         */
+        User user1 = new User();
+        user1.setId(1094592041087729666L);
+        user1.setAge(50);
+        user1.setName("kobe");
+        int rows = userMapper.alwaysUpdateSomeColumnById(user1);
+        System.out.println("影响行数: " + rows);
+    }
+
 }
