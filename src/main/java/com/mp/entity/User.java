@@ -23,6 +23,7 @@ public class User {
     //姓名
     private String name;
     //年龄
+    @TableField(fill = FieldFill.UPDATE)
     private Integer age;
     //邮箱
     private String email;

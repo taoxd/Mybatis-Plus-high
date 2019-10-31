@@ -48,4 +48,23 @@ public class InjectorTest {
         System.out.println("影响行数: " + rows);
     }
 
+
+    @Test
+    public void deleteByIdWithFill() {
+        /*
+        UPDATE USER
+            SET age = 18,
+            update_time = '2019-10-31T21:13:29.642',
+            deleted = 1
+        WHERE
+            id = 1189876059705798658
+            AND deleted = 0
+         */
+        User user1 = new User();
+        user1.setId(1189876059705798658L);
+        user1.setAge(18);
+        int rows = userMapper.deleteByIdWithFill(user1);
+        System.out.println("影响行数: " + rows);
+    }
+
 }
